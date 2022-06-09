@@ -1,13 +1,17 @@
+import static qupath.lib.gui.scripting.QPEx.*
+def pathToFolder = 'C:\\Users\\Simone\\Desktop\\topolino\\pippo'
+
 /**
  * Script to export image tiles (can be customized in various ways).
  */
 // Get the current image (supports 'Run for project')
 def imageData = getCurrentImageData()
-
+// Define output path (here, relative to project)
 def name = GeneralTools.getNameWithoutExtension(imageData.getServer().getMetadata().getName())
-%Change pathToFolder
-def pathOutputGloBad = buildFilePath('pathToFolder', 'GloBad')
-def pathOutputGloGood = buildFilePath('pathToFolder', 'GloGood')
+
+//Change pathToFolder
+def pathOutputGloBad = buildFilePath(pathToFolder, 'GloBad')
+def pathOutputGloGood = buildFilePath(pathToFolder, 'GloGood')
 mkdirs(pathOutputGloBad)
 mkdirs(pathOutputGloGood)
 
@@ -26,7 +30,7 @@ double downsample = requestedPixelSize / pixelSize
 def labelServer = new LabeledImageServer.Builder(imageData)
     .backgroundLabel(255, ColorTools.BLACK) // Specify background label (usually 0 or 255)
     .downsample(downsample)    // Choose server resolution; this should match the resolution at which tiles are exported
-    .addLabel('Glogood', 2)      // Choose output labels (the order matters!)
+    .addLabel('GLOGOOD', 1)      // Choose output labels (the order matters!)
     .multichannelOutput(false)  // If true, each label is a different channel (required for multiclass probability)
     .build()
 
@@ -34,7 +38,7 @@ def labelServer = new LabeledImageServer.Builder(imageData)
 // Create an exporter that requests corresponding tiles from the original & labelled image servers
 new TileExporter(imageData)
     .downsample(downsample)   // Define export resolution
-    .imageExtension('.jpg')   // Define file extension for original pixels (often .tif, .jpg, '.png' or '.ome.tif')
+    .imageExtension('.tif')   // Define file extension for original pixels (often .tif, .jpg, '.png' or '.ome.tif')
     .tileSize(512)            // Define size of each tile, in pixels
     .annotatedTilesOnly(true) // If true, only export tiles if there is a (classified) annotation present
     .overlap(64)              // Define overlap, in pixel units at the export resolution
@@ -47,7 +51,7 @@ new TileExporter(imageData)
 def labelServer1 = new LabeledImageServer.Builder(imageData)
     .backgroundLabel(255, ColorTools.BLACK) // Specify background label (usually 0 or 255)
     .downsample(downsample)    // Choose server resolution; this should match the resolution at which tiles are exported
-    .addLabel('Globad', 2)      // Choose output labels (the order matters!)
+    .addLabel('GLOBAD', 2)      // Choose output labels (the order matters!)
     .multichannelOutput(false)  // If true, each label is a different channel (required for multiclass probability)
     .build()
 
@@ -55,7 +59,7 @@ def labelServer1 = new LabeledImageServer.Builder(imageData)
 // Create an exporter that requests corresponding tiles from the original & labelled image servers
 new TileExporter(imageData)
     .downsample(downsample)   // Define export resolution
-    .imageExtension('.jpg')   // Define file extension for original pixels (often .tif, .jpg, '.png' or '.ome.tif')
+    .imageExtension('.tif')   // Define file extension for original pixels (often .tif, .jpg, '.png' or '.ome.tif')
     .tileSize(512)            // Define size of each tile, in pixels
     .annotatedTilesOnly(true) // If true, only export tiles if there is a (classified) annotation present
     .overlap(64)              // Define overlap, in pixel units at the export resolution
