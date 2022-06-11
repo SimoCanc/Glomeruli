@@ -1,3 +1,11 @@
+/*
+- Posizionarsi sulla cartella di isatallazione di QuPath:
+  Es: cd C:\Users\Simone\AppData\Local\QuPath-0.3.2"
+- Dare il seguente comando da shell:
+  "QuPath-0.3.2 (console).exe" script "C:\Users\Simone\Desktop\CreateProject.groovy" --args "C:\Users\Simone\Desktop\topolino"
+Ricordarsi di mettere le virgolette "" dove necessario
+*/
+
 import groovy.io.FileType
 import java.awt.image.BufferedImage
 import qupath.lib.images.servers.ImageServerProvider
