@@ -1,3 +1,7 @@
+/*
+Script che aggiunge le immagini annotate presenti nella cartella 'path', all'attuale progetto aperto in QuPath
+*/
+
 def path = '\\path\\to\\folder\\with\\qpdata\\files'
 
 def project = getProject()
