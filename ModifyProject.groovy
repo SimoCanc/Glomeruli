@@ -1,4 +1,6 @@
 /*
+Script per creare o modificare un progetto
+
 - Posizionarsi sulla cartella di isatallazione di QuPath:
   Es: cd C:\Users\Simone\AppData\Local\QuPath-0.3.2"
 - Dare il seguente comando da shell:
