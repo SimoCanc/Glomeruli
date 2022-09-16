@@ -13,7 +13,6 @@ import java.awt.image.BufferedImage
 import qupath.lib.images.servers.ImageServerProvider
 import qupath.lib.gui.commands.ProjectCommands
 
-//Did we receive a string via the command line args keyword?
 if (args.size() > 0)
     selectedDir = new File(args[0])
 else
@@ -22,7 +21,7 @@ else
 if (selectedDir == null)
     return
     
-//Check if we already have a QuPath Project directory in there...
+//Controllo se presente directory con un progetto QuPAth
 projectName = "QuPathProject"
 File directory = new File(selectedDir.toString() + File.separator + projectName)
 
@@ -32,10 +31,10 @@ if (!directory.exists())
     directory.mkdirs()
 }
 
-// Create project
+// Creazione progetto
 def project = Projects.createProject(directory , BufferedImage.class)
 
-// Build a list of files
+// Creazione lista di files
 def files = []
 selectedDir.eachFileRecurse (FileType.FILES) { file ->
     if (file.getName().toLowerCase().endsWith(".ndpi"))
@@ -45,36 +44,36 @@ selectedDir.eachFileRecurse (FileType.FILES) { file ->
     }
 }
 
-// Add files to the project
+// Aggiunta di un file al progetto
 for (file in files) {
     def imagePath = file.getCanonicalPath()
     
-    // Get serverBuilder
+    // Utilizzo serverBuilder
     def support = ImageServerProvider.getPreferredUriImageSupport(BufferedImage.class, imagePath, "")
     def builder = support.builders.get(0)
 
-    // Make sure we don't have null 
+    // Controllo che non sia null 
     if (builder == null) {
        print "Image not supported: " + imagePath
        continue
     }
     
-    // Add the image as entry to the project
+    // Aggiunta di un immagine al progetto
     print "Adding: " + imagePath
     entry = project.addImage(builder)
     
-    // Set a particular image type
+    // Impostazione del tipo di immagine
     def imageData = entry.readImageData()
     imageData.setImageType(ImageData.ImageType.BRIGHTFIELD_H_DAB)
     entry.saveImageData(imageData)
     
-    // Write a thumbnail if we can
+    // Creazione di un "thubnail", se possibile
     var img = ProjectCommands.getThumbnailRGB(imageData.getServer());
     entry.setThumbnail(img)
     
-    // Add an entry name (the filename)
+    // Aggiunta nome dell'imagine (il filename)
     entry.setImageName(file.getName())
 }
 
-// Changes should now be reflected in the project directory
+// Propagazione delle modifiche alla directory del progetto
 project.syncChanges()
