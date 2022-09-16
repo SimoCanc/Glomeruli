@@ -77,3 +77,22 @@ for (file in files) {
 
 // Propagazione delle modifiche alla directory del progetto
 project.syncChanges()
+
+###############################################################################################
+
+# In caso si volesse eseguire il codice direttamente da linea di comando
+# Esempio: concat_images.py [-h] \InputDirPath \OutputDirPath --resize 128
+import argparse
+
+parser = argparse.ArgumentParser(description='Crea una griglia di immagini')
+
+parser.add_argument('input_dir', type=str,
+                   help='La directory contenente le immagini con cui creare la griglia')
+parser.add_argument('output_dir', type=str,
+                   help='La directory dove verrà salvata l\'immagine della griglia')
+parser.add_argument('--resize', type=int, required=False,
+                   help='La dimensione a cui ridimensionare le immagini, opzionale')
+
+args = parser.parse_args()
+
+concat_images(args.input_dir, args.output_dir)
