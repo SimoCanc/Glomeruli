@@ -1,3 +1,7 @@
+/*
+Scritpt che crea una griglia (collage) di immagini
+*/
+
 import shutil
 import os
 
