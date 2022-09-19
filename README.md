@@ -1,2 +1,2 @@
 # Glomeruli
-Segmentazione semantica dei glomeruli
+Utylities per segmentazione semantica dei glomeruli
